@@ -1,50 +1,65 @@
-# React + TypeScript + Vite
+# Sports Recruitment Platform - Monorepo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive sports recruitment platform built with modern web technologies.
 
-Currently, two official plugins are available:
+## Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This monorepo contains:
 
-## Expanding the ESLint configuration
+- **apps/web** - React frontend with TypeScript, React Router, and Tailwind CSS
+- **apps/api** - NestJS backend with Prisma and MongoDB
+- **packages/types** - Shared TypeScript types and Zod schemas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started
 
-- Configure the top-level `parserOptions` property like this:
+### Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Node.js >= 18
+- pnpm >= 9
+- MongoDB
+
+### Installation
+
+```bash
+# Install dependencies
+pnpm install
+
+# Generate Prisma client
+pnpm api:prisma:generate
+
+# Push database schema
+pnpm api:prisma:push
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Development
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```bash
+# Start all services
+pnpm dev
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+# Start individual services
+pnpm web:dev    # Frontend only
+pnpm api:dev    # Backend only
+```
+
+### Scripts
+
+- `pnpm dev` - Start all services in development mode
+- `pnpm build` - Build all packages
+- `pnpm lint` - Lint all packages
+- `pnpm test` - Run tests for all packages
+- `pnpm typecheck` - Type check all packages
+
+## Project Structure
+
+```
+sports-recruitment-monorepo/
+├── apps/
+│   ├── web/          # React frontend
+│   └── api/          # NestJS backend
+├── packages/
+│   └── types/        # Shared types
+├── docs/
+└── .github/
+    └── workflows/
 ```

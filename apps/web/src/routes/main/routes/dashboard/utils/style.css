@@ -1,0 +1,9 @@
+/** @format */
+
+.elevated-on-hover {
+	@apply transition-opacity duration-200 hover:shadow-md;
+}
+
+.see-all-btn {
+	@apply font-semibold text-blue-700;
+}

@@ -1,0 +1,16 @@
+name: api branch manual deploy
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: "Branch to deploy (e.g., dev, feature/xyz)"
+        required: true
+        default: "dev"
+jobs:
+  call-deploy:
+    uses: ./.github/workflows/reusable-api-ecs-deploy.yml
+    with:
+      branch_name: ${{ github.event.inputs.branch_name }}
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

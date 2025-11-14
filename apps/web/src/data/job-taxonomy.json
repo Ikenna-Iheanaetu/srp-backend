@@ -1,0 +1,745 @@
+[
+	{
+		"name": "Economy, Administration and Law",
+		"children": [
+			{
+				"name": "Accounting and Bookkeeping",
+				"children": [
+					{
+						"name": "Accounting Economist",
+						"children": null
+					},
+					{
+						"name": "Auditor",
+						"children": null
+					},
+					{
+						"name": "Accounting Assistant",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Controller and Analysis",
+				"children": [
+					{
+						"name": "Controller",
+						"children": null
+					},
+					{
+						"name": "Business Analyst",
+						"children": null
+					},
+					{
+						"name": "Financial Analyst",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Payroll Administration",
+				"children": [
+					{
+						"name": "Payroll Administrator",
+						"children": null
+					},
+					{
+						"name": "Payroll Specialist",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Law",
+				"children": [
+					{
+						"name": "Lawyer",
+						"children": null
+					},
+					{
+						"name": "Attorney",
+						"children": null
+					},
+					{
+						"name": "Paralegal",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Administration",
+				"children": [
+					{
+						"name": "Administrator",
+						"children": null
+					},
+					{
+						"name": "Healthcare Administrator",
+						"children": null
+					},
+					{
+						"name": "Medical Secretary",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Construction and Civil Engineering",
+		"children": [
+			{
+				"name": "Construction Production",
+				"children": [
+					{
+						"name": "Carpenter",
+						"children": null
+					},
+					{
+						"name": "Bricklayer",
+						"children": null
+					},
+					{
+						"name": "Concrete Worker",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Painting and Surface Treatment",
+				"children": [
+					{
+						"name": "Painter",
+						"children": null
+					},
+					{
+						"name": "Varnisher",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "HVAC and Installation",
+				"children": [
+					{
+						"name": "HVAC Technician",
+						"children": null
+					},
+					{
+						"name": "Ventilation Technician",
+						"children": null
+					},
+					{
+						"name": "Plumber",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Sheet Metal Work",
+				"children": [
+					{
+						"name": "Building Sheet Metal Worker",
+						"children": null
+					},
+					{
+						"name": "Ventilation Sheet Metal Worker",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Groundwork and Earthmoving",
+				"children": [
+					{
+						"name": "Construction Worker",
+						"children": null
+					},
+					{
+						"name": "Machine Operator",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Healthcare and Social Care",
+		"children": [
+			{
+				"name": "Basic Care",
+				"children": [
+					{
+						"name": "Assistant Nurse",
+						"children": null
+					},
+					{
+						"name": "Care Assistant",
+						"children": null
+					},
+					{
+						"name": "Personal Assistant",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Specialist Care",
+				"children": [
+					{
+						"name": "Nurse",
+						"children": null
+					},
+					{
+						"name": "Midwife",
+						"children": null
+					},
+					{
+						"name": "Occupational Therapist",
+						"children": null
+					},
+					{
+						"name": "Physiotherapist",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Medical Administration",
+				"children": [
+					{
+						"name": "Medical Secretary",
+						"children": null
+					},
+					{
+						"name": "Healthcare Administrator",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Dental Care",
+				"children": [
+					{
+						"name": "Dentist",
+						"children": null
+					},
+					{
+						"name": "Dental Assistant",
+						"children": null
+					},
+					{
+						"name": "Dental Hygienist",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Psychiatry and Social Support",
+				"children": [
+					{
+						"name": "Psychologist",
+						"children": null
+					},
+					{
+						"name": "Counselor",
+						"children": null
+					},
+					{
+						"name": "Support Worker",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Education and Schooling",
+		"children": [
+			{
+				"name": "Preschool",
+				"children": [
+					{
+						"name": "Preschool Teacher",
+						"children": null
+					},
+					{
+						"name": "Childcare Worker",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Primary School",
+				"children": [
+					{
+						"name": "Primary School Teacher",
+						"children": null
+					},
+					{
+						"name": "Recreational Pedagogue",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "High School and Adult Education",
+				"children": [
+					{
+						"name": "Subject Teacher",
+						"children": null
+					},
+					{
+						"name": "Vocational Teacher",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Special Education",
+				"children": [
+					{
+						"name": "Special Education Teacher",
+						"children": null
+					},
+					{
+						"name": "Special Educator",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Career and Study Guidance",
+				"children": [
+					{
+						"name": "Career and Study Counselor",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Sales, Purchasing and Marketing",
+		"children": [
+			{
+				"name": "Sales",
+				"children": [
+					{
+						"name": "Inside Salesperson",
+						"children": null
+					},
+					{
+						"name": "Field Salesperson",
+						"children": null
+					},
+					{
+						"name": "Telemarketer",
+						"children": null
+					},
+					{
+						"name": "Account Manager",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Purchasing and Procurement",
+				"children": [
+					{
+						"name": "Buyer",
+						"children": null
+					},
+					{
+						"name": "Procurement Officer",
+						"children": null
+					},
+					{
+						"name": "Freight Forwarder",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Marketing",
+				"children": [
+					{
+						"name": "Marketer",
+						"children": null
+					},
+					{
+						"name": "Digital Marketer",
+						"children": null
+					},
+					{
+						"name": "Content Manager",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Customer Service",
+				"children": [
+					{
+						"name": "Customer Service Representative",
+						"children": null
+					},
+					{
+						"name": "Retail Salesperson",
+						"children": null
+					},
+					{
+						"name": "Cashier",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Data and IT",
+		"children": [
+			{
+				"name": "System Development",
+				"children": [
+					{
+						"name": "System Developer",
+						"children": null
+					},
+					{
+						"name": "Programmer",
+						"children": null
+					},
+					{
+						"name": "Software Engineer",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "IT Operations and Support",
+				"children": [
+					{
+						"name": "IT Technician",
+						"children": null
+					},
+					{
+						"name": "Network Technician",
+						"children": null
+					},
+					{
+						"name": "Support Technician",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Data Analysis and Security",
+				"children": [
+					{
+						"name": "Data Analyst",
+						"children": null
+					},
+					{
+						"name": "IT Security Specialist",
+						"children": null
+					},
+					{
+						"name": "Systems Analyst",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Web and Design",
+				"children": [
+					{
+						"name": "Web Developer",
+						"children": null
+					},
+					{
+						"name": "UX/UI Designer",
+						"children": null
+					},
+					{
+						"name": "Graphic Designer",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Crafts",
+		"children": [
+			{
+				"name": "Wood and Carpentry",
+				"children": [
+					{
+						"name": "Furniture Carpenter",
+						"children": null
+					},
+					{
+						"name": "Interior Carpenter",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Food Craft",
+				"children": [
+					{
+						"name": "Baker",
+						"children": null
+					},
+					{
+						"name": "Pastry Chef",
+						"children": null
+					},
+					{
+						"name": "Butcher",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Beauty and Body Care",
+				"children": [
+					{
+						"name": "Hairdresser",
+						"children": null
+					},
+					{
+						"name": "Skin Therapist",
+						"children": null
+					},
+					{
+						"name": "Podiatrist",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Other Crafts",
+				"children": [
+					{
+						"name": "Shoemaker",
+						"children": null
+					},
+					{
+						"name": "Upholsterer",
+						"children": null
+					},
+					{
+						"name": "Glassblower",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Transport and Logistics",
+		"children": [
+			{
+				"name": "Vehicles and Driving",
+				"children": [
+					{
+						"name": "Truck Driver",
+						"children": null
+					},
+					{
+						"name": "Bus Driver",
+						"children": null
+					},
+					{
+						"name": "Train Driver",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Warehouse and Logistics",
+				"children": [
+					{
+						"name": "Warehouse Worker",
+						"children": null
+					},
+					{
+						"name": "Forklift Driver",
+						"children": null
+					},
+					{
+						"name": "Logistician",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Freight and Distribution",
+				"children": [
+					{
+						"name": "Freight Forwarder",
+						"children": null
+					},
+					{
+						"name": "Transport Planner",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Science and Technology",
+		"children": [
+			{
+				"name": "Laboratory Work",
+				"children": [
+					{
+						"name": "Biomedical Analyst",
+						"children": null
+					},
+					{
+						"name": "Laboratory Assistant",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Environment and Health",
+				"children": [
+					{
+						"name": "Environmental Inspector",
+						"children": null
+					},
+					{
+						"name": "Health Protection Inspector",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Technical Development",
+				"children": [
+					{
+						"name": "Civil Engineer",
+						"children": null
+					},
+					{
+						"name": "Mechanical Engineer",
+						"children": null
+					},
+					{
+						"name": "Electrical Engineer",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Culture, Media and Design",
+		"children": [
+			{
+				"name": "Media and Communication",
+				"children": [
+					{
+						"name": "Journalist",
+						"children": null
+					},
+					{
+						"name": "Photographer",
+						"children": null
+					},
+					{
+						"name": "Editor",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Design and Form",
+				"children": [
+					{
+						"name": "Graphic Designer",
+						"children": null
+					},
+					{
+						"name": "Industrial Designer",
+						"children": null
+					},
+					{
+						"name": "Interior Architect",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Culture and Entertainment",
+				"children": [
+					{
+						"name": "Musician",
+						"children": null
+					},
+					{
+						"name": "Actor",
+						"children": null
+					},
+					{
+						"name": "Artist",
+						"children": null
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Security and Rescue Services",
+		"children": [
+			{
+				"name": "Rescue Services",
+				"children": [
+					{
+						"name": "Firefighter",
+						"children": null
+					},
+					{
+						"name": "Rescue Leader",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Police and Surveillance",
+				"children": [
+					{
+						"name": "Police Officer",
+						"children": null
+					},
+					{
+						"name": "Security Guard",
+						"children": null
+					},
+					{
+						"name": "Correctional Officer",
+						"children": null
+					}
+				]
+			},
+			{
+				"name": "Military Work",
+				"children": [
+					{
+						"name": "Soldier",
+						"children": null
+					},
+					{
+						"name": "Officer",
+						"children": null
+					}
+				]
+			}
+		]
+	}
+]

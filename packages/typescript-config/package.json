@@ -1,0 +1,10 @@
+{
+	"name": "@repo/typescript-config",
+	"version": "0.0.0",
+	"license": "MIT",
+	"type": "module",
+	"private": true,
+	"devDependencies": {
+		"typescript": "5.9.2"
+	}
+}

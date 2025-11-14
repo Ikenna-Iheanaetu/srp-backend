@@ -1,0 +1,19 @@
+# @format
+
+name: Auto SRS dev Deploy
+
+on:
+    push:
+        branches: [dev]
+        paths:
+            - "apps/web/**"
+            - ".github/workflows/web-reusable-srs-deploy.yml"
+
+jobs:
+    call-deployment:
+        uses: ./.github/workflows/web-reusable-srs-deploy.yml.yml
+        with:
+            target_branch: ${{ github.ref_name }}
+        secrets:
+            registry_username: ${{ secrets.REGISTRY_USERNAME }}
+            registry_password: ${{ secrets.REGISTRY_PASSWORD }}

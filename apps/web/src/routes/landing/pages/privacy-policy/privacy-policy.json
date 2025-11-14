@@ -1,0 +1,357 @@
+{
+  "sections": [
+    {
+      "title": "Definitions",
+      "content": [
+        {
+          "index": "1.1",
+          "text": "Platform: Refers to the Sports & Rekryting website, mobile application, and associated services."
+        },
+        {
+          "index": "1.2",
+          "text": "User: Any individual or entity accessing or using the Platform, including Players, Supporters, Clubs, and Companies."
+        },
+        {
+          "index": "1.3",
+          "text": "Dynamic Card: A digital profile created by Users to showcase their achievements, skills, and preferences."
+        },
+        {
+          "index": "1.4",
+          "text": "Services: Includes recruitment tools, dynamic cards, AI-powered matching, and other features provided by the Platform."
+        },
+        {
+          "index": "1.5",
+          "text": "Content: Refers to any data, information, text, images, or other materials uploaded, submitted, or shared on the Platform."
+        }
+      ]
+    },
+    {
+      "title": "Eligibility",
+      "content": [
+        {
+          "index": "2.1",
+          "text": "You must be at least 18 years old or the legal age of majority in your jurisdiction to use the Platform."
+        },
+        {
+          "index": "2.2",
+          "text": "By registering, you represent and warrant that:",
+          "subItems": [
+            {
+              "text": "You have the legal capacity to enter into binding agreements."
+            },
+            {
+              "text": "The information you provide during registration is accurate and complete."
+            }
+          ]
+        },
+        {
+          "index": "2.3",
+          "text": "The Platform reserves the right to suspend or terminate accounts that violate these eligibility requirements."
+        }
+      ]
+    },
+    {
+      "title": "User Roles and Responsibilities",
+      "content": [
+        {
+          "index": "3.1",
+          "text": "Players and Supporters:",
+          "subItems": [
+            {
+              "text": "Create and manage a Dynamic Card to showcase your skills, achievements, and goals."
+            },
+            {
+              "text": "Provide truthful and accurate information on your profile."
+            },
+            {
+              "text": "Respond promptly to company inquiries or job opportunities."
+            }
+          ]
+        },
+        {
+          "index": "3.2",
+          "text": "Companies:",
+          "subItems": [
+            { "text": "Use the Platform to search for and recruit talent." },
+            {
+              "text": "Pay applicable fees for job postings, subscriptions, or successful hires."
+            },
+            {
+              "text": "Maintain the confidentiality of candidate information shared with you."
+            }
+          ]
+        },
+        {
+          "index": "3.3",
+          "text": "Clubs:",
+          "subItems": [
+            {
+              "text": "Onboard Players and Supporters to your network via Dynamic Cards or QR codes."
+            },
+            {
+              "text": "Manage member profiles and track revenue from hires."
+            },
+            {
+              "text": "Use revenue-sharing payments for legitimate club-related purposes"
+            }
+          ]
+        },
+        {
+          "index": "3.4",
+          "text": "General User Responsibilities:",
+          "subItems": [
+            {
+              "text": "Do not upload illegal, harmful, or offensive content."
+            },
+            {
+              "text": "Protect your account credentials and notify us immediately of unauthorized access."
+            },
+            {
+              "text": "Comply with all applicable laws and regulations while using the Platform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Use of the Platform",
+      "content": [
+        {
+          "index": "4.1",
+          "text": "License to Use: Sports & Rekryting grants you a non-exclusive, non-transferable, and revocable license to access and use the Platform."
+        },
+        {
+          "index": "4.2",
+          "text": "Prohibited Activities:",
+          "subItems": [
+            {
+              "text": "Misusing the Platform for fraudulent or unauthorized purposes."
+            },
+            {
+              "text": "Interfering with or disrupting Platform operations (e.g., hacking, reverse engineering)."
+            },
+            {
+              "text": "Uploading content that violates intellectual property, privacy, or other rights."
+            }
+          ]
+        },
+        {
+          "index": "4.3",
+          "text": "Platform Modifications: Sports & Rekryting reserves the right to update or discontinue any feature or service at its sole discretion."
+        }
+      ]
+    },
+    {
+      "title": "Revenue Distribution Policy",
+      "content": [
+        {
+          "index": "1",
+          "text": "Club Revenue Shares"
+        },
+        {
+          "index": "1.1",
+          "text": "Permanent Club Connections",
+          "subItems": [
+            {
+              "text": "Players and supporters recruited through the platform are permanently linked to the club responsible for onboarding them. Once a dynamic card is generated, the connection to the originating club cannot be altered."
+            },
+            {
+              "text": "Any recruitment fees or other revenues generated from the employment of these players or supporters will be allocated to the original club, both at the time of recruitment and for any future opportunities."
+            }
+          ]
+        },
+        {
+          "index": "1.2",
+          "text": "Dual Club Associations (Proposed)",
+          "subItems": [
+            {
+              "text": "Players who currently represent a different club from the one responsible for their recruitment and training may have a dual club association. In such cases:"
+            },
+            {
+              "sub": [
+                "The Main Club (responsible for recruitment and training) will receive all recruitment-related fees.",
+                "The Active Club (current representation) does not receive recruitment fees but benefits from increased player visibility."
+              ]
+            },
+            {
+              "text": "This feature is under review and may be implemented in the future."
+            }
+          ]
+        },
+        {
+          "index": "1.3",
+          "text": "Earnings",
+          "subItems": [
+            {
+              "text": "Clubs earn revenue based on successful hires of their Players or Supporters."
+            },
+            {
+              "text": "Revenue shares will be credited to the Club’s account monthly, subject to a minimum payout threshold of [Insert Amount]."
+            }
+          ]
+        },
+        {
+          "index": "2",
+          "text": "Company Fees and Club Associations"
+        },
+        {
+          "index": "2.1",
+          "text": "Linking Company Fees to Clubs",
+          "subItems": [
+            {
+              "text": "Companies subscribing to the platform are directly associated with a specific club for the duration of their subscription. For instance:"
+            },
+            {
+              "sub": [
+                "If Company A subscribes to the platform through Club B, a portion of the subscription fee will be distributed to Club B as a revenue share"
+              ]
+            }
+          ]
+        },
+        {
+          "index": "2.2",
+          "text": "Subscription Renewals and Club Selection",
+          "subItems": [
+            {
+              "text": "Upon renewal, companies can choose to maintain their association with the same club or switch to a different club based on their preferences."
+            }
+          ]
+        },
+        {
+          "index": "2.3",
+          "text": " Companies with Multiple Locations",
+          "subItems": [
+            {
+              "text": "Large organizations operating in multiple locations or at a state/municipal level can purchase multiple contracts linked to different clubs. This enables them to support multiple clubs simultaneously, promoting equitable distribution of revenue."
+            }
+          ]
+        },
+        {
+          "index": "2.4",
+          "text": "For Companies",
+          "subItems": [
+            {
+              "text": "Companies must pay subscription fees, job posting fees, or per-hire fees as applicable."
+            },
+            {
+              "text": "Fees are non-refundable except as required by law."
+            }
+          ]
+        },
+        {
+          "index": "3",
+          "text": "Summary of Revenue Rules",
+          "subItems": [
+            {
+              "text": "Clubs retain a permanent connection to players and supporters they onboard, ensuring continued revenue benefits for all future recruitments."
+            },
+            {
+              "text": "A dual club association feature may be introduced to benefit both the training club and the active club of a player."
+            },
+            {
+              "text": "Companies are directly linked to a club through their subscription, ensuring clubs receive a fair share of company fees."
+            }
+          ]
+        },
+        {
+          "index": "4",
+          "text": "Taxes",
+          "subItems": [
+            {
+              "text": "Users are responsible for any taxes associated with payments or revenue earned through the Platform."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Content and Intellectual Property",
+      "content": [
+        {
+          "index": "6.1",
+          "text": "User Content",
+          "subItems": [
+            {
+              "text": "By submitting Content to the Platform, you grant Sports & Rekryteing a worldwide, royalty-free, non-exclusive license to use, display, and distribute your Content for the purposes of operating the Platform."
+            }
+          ]
+        },
+        {
+          "index": "6.2",
+          "text": "Platform Content",
+          "subItems": [
+            {
+              "text": "All intellectual property on the Platform (e.g., trademarks, logos, software) is owned by Sports & Rekryteing. You may not copy, distribute, or modify Platform Content without prior written consent."
+            }
+          ]
+        },
+        {
+          "index": "6.3",
+          "text": "Third-Party Content",
+          "subItems": [
+            {
+              "text": "The Platform may feature links or content from third parties. Sports & Rekryteing is not responsible for the accuracy or legality of third-party content."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Privacy and Data Protection",
+      "content": [
+        {
+          "index": "7.1",
+          "text": "Sports & Rekryteing collects and processes personal data in accordance with our Privacy Policy [Link to Privacy Policy]."
+        },
+        {
+          "index": "7.2",
+          "text": "You consent to the collection, use, and sharing of your data for the purposes of operating the Platform."
+        }
+      ]
+    },
+    {
+      "title": "Limitation of Liability",
+      "content": [
+        {
+          "index": "8.1",
+          "text": "Sports & Rekryteing is not liable for:",
+          "subItems": [
+            {
+              "text": "Outcomes of recruitment decisions made through the Platform.8.2 To the maximum extent permitted by law, Sports & Rekryteing’s total liability is limited to the fees paid by you in the 12 months preceding the claim."
+            }
+          ]
+        },
+        {
+          "index": "8.2",
+          "text": "To the maximum extent permitted by law, Sports & Rekryteing’s total liability is limited to the fees paid by you in the 12 months preceding the claim."
+        }
+      ]
+    },
+    {
+      "title": "Termination",
+      "content": [
+        {
+          "index": "9.1",
+          "text": "Sports & Rekryteing reserves the right to suspend or terminate your account for violations of these Terms."
+        },
+        {
+          "index": "9.2",
+          "text": "Users may terminate their account by contacting customer support."
+        }
+      ]
+    },
+    {
+      "title": "Governing Law and Disputes",
+      "content": [
+        {
+          "index": "10.1",
+          "text": "These Terms are governed by the laws of [Your Jurisdiction]."
+        },
+        {
+          "index": "10.2",
+          "text": "Any disputes shall be resolved through binding arbitration or mediation in [Your Jurisdiction], unless otherwise specified by law."
+        }
+      ]
+    }
+  ]
+}

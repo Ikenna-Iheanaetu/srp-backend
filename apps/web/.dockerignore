@@ -1,0 +1,17 @@
+# Dependencies and build artifacts
+**/node_modules
+**/dist
+**/build
+.git
+.gitignore
+.DS_Store
+.vscode/
+
+# Logs and cache
+logs
+npm-debug.log*
+.eslintcache
+.yarn-cache
+
+# Exclude unneeded packages
+apps/api/

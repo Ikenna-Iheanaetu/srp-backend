@@ -1,0 +1,83 @@
+{
+  "generalQuestions": [
+    {
+      "question": "What is [Platform Name]?",
+      "answer": "[Platform Name] is a recruitment platform that connects companies with professionals who embody the values of sports—discipline, focus, and teamwork. We specialize in matching companies with sports-driven talent through dynamic profiles and AI-powered tools."
+    },
+    {
+      "question": "How does [Platform Name] help companies find candidates?",
+      "answer": "Our platform uses AI-powered matching to connect companies with candidates based on traits, skills, and job requirements. Advanced search filters make it easy to find talent by region, club affiliation, or specific characteristics."
+    },
+    {
+      "question": "What types of professionals can be recruited through the platform?",
+      "answer": "You can recruit professionals with a background in sports or those who exhibit traits such as leadership, resilience, and discipline. These individuals are ideal for industries requiring high-performing, goal-oriented talent."
+    },
+    {
+      "question": "Is there a fee for hiring through the platform?",
+      "answer": "Yes, companies can either subscribe to a plan or pay a per-hire fee. The exact pricing depends on your needs and the number of hires."
+    },
+    {
+      "question": "Who can use [Platform Name]?",
+      "answer": "Players: Professionals looking to showcase their skills and find career opportunities.\nSupporters: Fans and volunteers with transferable skills who want to explore new roles.\nCompanies: Businesses seeking exceptional talent with a winning mindset.\nClubs: Sports organizations fostering talent and benefiting from revenue-sharing opportunities."
+    },
+    {
+      "question": "How do I edit my company profile?",
+      "answer": "You can change the profile associated with your account by going to the account settings and clicking edit company profile."
+    }
+  ],
+  "playersAndSupporters": [
+    {
+      "question": "How do I create my profile?",
+      "answer": "After signing up, simply fill out your details—name, photo, sports history (for players), or club affiliation (for supporters). Your profile is automatically turned into a dynamic card that you can share with potential employers."
+    },
+    {
+      "question": "What is a dynamic card?",
+      "answer": "A dynamic card is your digital profile that highlights your achievements, skills, and goals. It's designed to showcase your unique value to employers in a visually engaging way."
+    },
+    {
+      "question": "Can I edit my card after creating it?",
+      "answer": "Yes, you can update your card at any time through your dashboard. This ensures your profile stays up to date with your latest achievements and career goals."
+    },
+    {
+      "question": "How will I know if a company is interested in me?",
+      "answer": "You'll receive a notification whenever a company views your card or invites you to apply for a role. You can also track applications through your dashboard."
+    },
+    {
+      "question": "What types of professionals can I recruit through the platform?",
+      "answer": "You can recruit professionals with a background in sports or those who exhibit traits such as leadership, resilience, and discipline. These individuals are ideal for industries requiring high-performing, goal-oriented talent."
+    },
+    {
+      "question": "How do I change my account email?",
+      "answer": "You can change the email address associated with your account by going to the account settings and clicking edit email."
+    }
+  ],
+  "clubs": [
+    {
+      "question": "How does [Platform Name] benefit clubs?",
+      "answer": "Clubs can onboard their members (players and supporters) onto the platform and earn revenue whenever their members are hired. Clubs can also promote events, initiatives, and sponsorship opportunities through their dynamic cards."
+    },
+    {
+      "question": "How do clubs onboard members?",
+      "answer": "Clubs can use QR codes or direct invites to onboard players and supporters. Members automatically link to the club's profile, making it easy to track their achievements and opportunities."
+    },
+
+    {
+      "question": "How is the revenue split between the platform and clubs?",
+      "answer": "Typically, the platform retains a percentage of the hiring fee (e.g., 70%), while the remaining (e.g., 30%) is shared with the club associated with the hired player or supporter. The exact percentage depends on the agreed terms."
+    },
+    {
+      "question": "How does the club earn revenue?",
+      "answer": "When a player or supporter linked to your club is hired by a company through the platform, your club receives a share of the hiring fee paid by the company."
+    },
+
+    {
+      "question": "How will my club receive payments?",
+      "answer": "Payments are processed through the club's revenue dashboard. Clubs can withdraw funds directly to their bank account or reinvest in platform features like premium event promotion."
+    },
+    {
+      "question": "Can multiple clubs share revenue for one hire?",
+
+      "answer": "No. Revenue is allocated to the single club linked to the hired member's profile at the time of recruitment."
+    }
+  ]
+}

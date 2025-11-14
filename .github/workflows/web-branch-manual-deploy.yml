@@ -1,0 +1,21 @@
+# @format
+
+name: web branch manual deploy
+
+on:
+    workflow_dispatch:
+        inputs:
+            branch_name:
+                description: "Branch to build and deploy (e.g., dev, feature/xyz)"
+                required: true
+                default: "dev"
+
+jobs:
+    call-deploy:
+        uses: ./.github/workflows/reusable-web-ecs-deploy.yml
+        with:
+            # Pass the dynamic branch name chosen by the user
+            branch_name: ${{ github.event.inputs.branch_name }}
+        secrets:
+            aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

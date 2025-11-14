@@ -1,0 +1,19 @@
+# @format
+
+name: Web SRS Manual Deploy
+
+on:
+    workflow_dispatch:
+        inputs:
+            branch_name:
+                description: "Branch to build and deploy (e.g., dev, feature/xyz)"
+                required: true
+                default: "dev"
+jobs:
+    call-deployment:
+        uses: ./.github/workflows/web-reusable-srs-deploy.yml
+        with:
+            target_branch: ${{ github.ref_name }}
+        secrets:
+            registry_username: ${{ secrets.REGISTRY_USERNAME }}
+            registry_password: ${{ secrets.REGISTRY_PASSWORD }}

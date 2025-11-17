@@ -1,0 +1,842 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Enums for better type safety
+enum UserType {
+  ADMIN
+  COMPANY
+  CLUB
+  PLAYER
+  SUPPORTER
+}
+
+enum AffiliateType {
+  COMPANY
+  PLAYER
+  SUPPORTER
+}
+
+enum UserStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum AffiliateStatus {
+  PENDING
+  ACTIVE
+}
+
+enum EmploymentType {
+  FREELANCE
+  PART_TIME
+  FULL_TIME
+  CONTRACT
+  INTERNSHIP
+  FIXED_TERM
+  PERMANENT
+  TEMPORARY
+  SEASONAL
+  HOURLY
+  PROJECT_BASED
+  PROBATIONARY
+}
+
+enum ExperienceLevel {
+  ENTRY
+  MID
+  SENIOR
+  EXECUTIVE
+}
+
+enum JobMode {
+  ONSITE
+  REMOTE
+  HYBRID
+}
+
+enum JobStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+}
+
+enum ApplicationStatus {
+  APPLIED
+  NOT_APPLIED
+  UNDER_REVIEW
+  SHORTLISTED
+  REJECTED
+}
+
+enum ShortlistedStatus {
+  HIRED
+  NOT_HIRED
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  CANCELLED
+  OVERDUE
+}
+
+enum RevenueType {
+  HIRING_FEE
+  SUBSCRIPTION
+  OTHER
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  EXPIRED
+  HIRED
+  NOT_HIRED
+  ENDED
+}
+
+enum ChatEventType {
+  CHAT_INITIATED
+  CHAT_ACCEPTED
+  CHAT_DECLINED
+  CHAT_RESENT
+  CHAT_DECLINED_RETRIED
+  CHAT_ENDED_RETRIED
+  CHAT_EXPIRED_RETRIED
+  CHAT_EXTENDED
+  CHAT_EXPIRED
+  CHAT_ENDED
+  MESSAGE_SENT
+  PLAYER_HIRED
+  REMINDER_SENT
+  HIRE_REQUEST_CREATED
+  HIRE_REQUEST_ACCEPTED
+  HIRE_REQUEST_DECLINED
+  HIRE_REQUEST_EXPIRED
+  HIRE_REQUEST_ENDED
+}
+
+enum RequestExtendEventDays {
+  DAYS_14
+  DAYS_7
+  DAYS_3
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum OtpType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  AFFILIATE_INVITE
+  CLUB_INVITE
+}
+
+enum OtpStatus {
+  ACTIVE
+  USED
+  EXPIRED
+  REVOKED
+}
+
+enum NotificationType {
+  SYSTEM
+  JOB_ALERT
+  APPLICATION_UPDATE
+  MESSAGE
+  REMINDER
+}
+
+enum NotificationStatus {
+  UNREAD
+  READ
+}
+
+enum ChatStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  DECLINED
+  ENDED
+}
+
+enum HireStatus {
+  ACTIVE
+  TERMINATED
+}
+
+// Core User Model
+model User {
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?
+  email             String     @unique
+  password          String?
+  userType          UserType
+  status            UserStatus @default(PENDING)
+  useGoogle         Boolean    @default(false)
+  passwordChangedAt DateTime?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  // Relationships
+  player                Player?
+  company               Company?
+  club                  Club?
+  admin                 Admin?
+  notifications         Notification[]
+  affiliates            Affiliate[]
+  refreshTokens         RefreshToken[]
+  otpCodes              OtpCode[]        @relation("UserOtpCodes")
+  savedByClubs          SavedAffiliate[]
+  sentMessages          Message[]        @relation("SentMessages")
+  chatsSent             Chat[]           @relation("ChatInitiator")
+  chatsReceived         Chat[]           @relation("ChatReceiver")
+  hireRequestsInitiated HireRequest[]    @relation("HireRequestInitiator")
+  hireRequestsReceived  HireRequest[]    @relation("HireRequestRecipient")
+
+  @@map("users")
+}
+
+model OtpCode {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String?   @db.ObjectId
+  affiliateId   String?   @db.ObjectId
+  email         String
+  hashedCode    String
+  type          OtpType
+  status        OtpStatus @default(ACTIVE)
+  expiresAt     DateTime
+  attempts      Int       @default(0)
+  maxAttempts   Int       @default(5)
+  lastAttemptAt DateTime?
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  metadata Json? // {purpose: string, additionalData: any}
+
+  user      User?      @relation("UserOtpCodes", fields: [userId], references: [id], onDelete: Cascade)
+  affiliate Affiliate? @relation("AffiliateOtpCodes", fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type, status])
+  @@index([email, type, status])
+  @@index([expiresAt])
+  @@index([createdAt])
+  @@map("otp_codes")
+}
+
+// Player Profile
+model Player {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String   @unique @db.ObjectId
+  about                String?
+  address              String?
+  country               String?
+  avatar               String?
+  shirtNumber          Int?
+  birthYear            Int?
+  sportsHistory        String?
+  industry             String?
+  phone                String?
+  yearsOfExperience    Int?
+  score                Int?
+  isQuestionnaireTaken Boolean  @default(false)
+  analysisResult       String?
+  workAvailability     Boolean  @default(true)
+  resume               String?
+  clubCategory         String?
+  clubId               String?  @db.ObjectId
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // JSON fields for complex data
+  workCountry             Json? // Array of strings
+  jobRole                 Json? // {primary: string, secondary: string[]}
+  employmentType          Json? // {primary: EmploymentType, secondary: EmploymentType[]}
+  certifications          Json? // Array of strings
+  traits                  Json? // Array of strings
+  skills                  Json? // Array of strings
+  onboardingSteps         Json? // Array of numbers
+  securityQuestion        Json? // {question: string, answer: string}
+  recentlyViewedCompanies Json? // Array of company IDs (last 4)
+
+  // Relationships
+  user                 User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club                 Club?            @relation(fields: [clubId], references: [id])
+  experiences          Experience[]
+  applications         Application[]
+  shortlisted          Shortlisted[]
+  bookmarks            PlayerBookmark[]
+  hireRequestsAsPlayer HireRequest[]
+  Hire                 Hire[]
+
+  @@map("players")
+}
+
+// Experience as separate model for better querying
+model Experience {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  playerId     String    @db.ObjectId
+  title        String
+  company      String
+  current      Boolean   @default(false)
+  remote       Boolean   @default(false)
+  startDate    DateTime?
+  endDate      DateTime?
+  companyPhone String?
+  companyEmail String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // JSON fields
+  skills           Json? // Array of strings
+  tools            Json? // Array of strings
+  responsibilities Json? // Array of strings
+
+  // Relationships
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@map("experiences")
+}
+
+// Company Profile
+model Company {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String   @unique @db.ObjectId
+  about                String?
+  availability         String?
+  tagline              String?
+  industry             String?
+  address              String?
+  country              String?
+  phone                String?
+  avatar               String?
+  secondaryAvatar      String?
+  banner               String?
+  isQuestionnaireTaken Boolean  @default(false)
+  analysisResult       String?
+  score                Int?
+  focus                String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // JSON fields
+  region                Json? // {primary: string, secondary: string[]}
+  onboardingSteps       Json? // Array of numbers
+  preferredClubs        Json? // Array of strings
+  securityQuestion      Json? // {question: string, answer: string}
+  recentlyViewedPlayers Json? // Array of player IDs (last 4)
+
+  // Relationships
+  user                  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs                  Job[]
+  tasks                 Task[]
+  invoices              Invoice[]
+  hireRequestsAsCompany HireRequest[]
+  Hire                  Hire[]
+
+  // Performance indexes for admin queries
+  @@index([createdAt])
+  @@map("companies")
+}
+
+// Club Profile
+model Club {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String   @unique @db.ObjectId
+  about          String?
+  tagline        String?
+  category       String?
+  country        String?
+  region         String?
+  website        String?
+  phone          String?
+  avatar         String?
+  banner         String?
+  focus          String?
+  founded        String?
+  refCode        String   @unique
+  preferredColor String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // JSON fields
+  onboardingSteps          Json? // Array of numbers
+  securityQuestion         Json? // {question: string, answer: string}
+  sponsorshipOpportunities Json? // Array of strings
+  sponsorshipPrograms      Json? // Array of strings
+  socials                  Json? // {facebook: string, instagram: string, twitter: string}
+  address                  Json? // {street: string, city: string, postalCode: string}
+
+  // Relationships
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  players         Player[]
+  clubUpdates     ClubUpdate[]
+  affiliates      Affiliate[]
+  savedAffiliates SavedAffiliate[]
+  invoices        Invoice[]
+
+  @@map("clubs")
+}
+
+// Admin Profile
+model Admin {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique @db.ObjectId
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // JSON fields
+  securityQuestion Json? // {question: string, answer: string}
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("admins")
+}
+
+model RefreshToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  jti       String
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  revoked   Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([jti])
+  @@index([userId, revoked])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
+
+// Job Postings
+model Job {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  companyId       String           @db.ObjectId
+  title           String
+  role            String
+  description     String
+  location        String
+  type            String // Will store employment type
+  experienceLevel ExperienceLevel?
+  mode            JobMode?
+  startDate       DateTime
+  endDate         DateTime?
+  status          JobStatus        @default(ACTIVE)
+  openToAll       Boolean?
+  draftOrigin     String? // "never_posted" | "from_posted"
+  draftedAt       DateTime? // When job was drafted
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // JSON fields for arrays and complex objects
+  responsibilities Json // Array of strings
+  qualifications   Json // Array of strings
+  skills           Json? // Array of strings
+  traits           Json? // Array of strings
+  clubs            Json? // Array of strings
+  tags             Json? // Array of strings
+  salary           Json // {min: number, max: number, currency: string}
+
+  // Relationships
+  company      Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  applications Application[]
+  shortlisted  Shortlisted[]
+  bookmarks    PlayerBookmark[]
+  Hire         Hire[]
+
+  @@index([companyId, status])
+  @@map("jobs")
+}
+
+// Job Applications
+model Application {
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  jobId             String            @db.ObjectId
+  playerId          String            @db.ObjectId
+  name              String
+  email             String
+  phone             String
+  zip               String
+  resume            String?
+  applicationLetter String?
+  status            ApplicationStatus @default(APPLIED)
+  legallyAuthorized Boolean?
+  visaSponsorship   Boolean?
+  yearsOfExperience Int?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  // Relationships
+  job    Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([jobId, status])
+  @@map("applications")
+}
+
+// Shortlisted Candidates
+model Shortlisted {
+  id        String            @id @default(auto()) @map("_id") @db.ObjectId
+  jobId     String            @db.ObjectId
+  playerId  String            @db.ObjectId
+  invoiceId String?           @db.ObjectId
+  status    ShortlistedStatus @default(NOT_HIRED)
+  hiredAt   DateTime?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  // Relationships
+  job     Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  player  Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  invoice Invoice? @relation(fields: [invoiceId], references: [id])
+
+  @@unique([jobId, playerId])
+  // Performance indexes for admin queries
+  @@index([status, hiredAt])
+  @@index([status, createdAt])
+  @@index([createdAt])
+  @@map("shortlisted")
+}
+
+// Player Job Bookmarks
+model PlayerBookmark {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  playerId  String   @db.ObjectId
+  jobId     String   @db.ObjectId
+  createdAt DateTime @default(now())
+
+  // Relationships
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  job    Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, jobId])
+  @@map("player_bookmarks")
+}
+
+// Tasks
+model Task {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  companyId  String       @db.ObjectId
+  title      String
+  category   String
+  notes      String?
+  priority   TaskPriority
+  startDate  DateTime
+  endDate    DateTime
+  status     TaskStatus
+  assignedTo String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  // JSON fields
+  tags Json? // Array of strings
+
+  // Relationships
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+// Notifications
+model Notification {
+  id        String             @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String             @db.ObjectId
+  title     String
+  message   String
+  type      NotificationType
+  status    NotificationStatus @default(UNREAD)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status, createdAt])
+  @@index([userId, type])
+  @@map("notifications")
+}
+
+// Club Updates
+model ClubUpdate {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clubId    String   @db.ObjectId
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
+  @@map("club_updates")
+}
+
+// Saved Affiliates (Club's saved affiliates)
+model SavedAffiliate {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clubId    String   @db.ObjectId
+  userId    String   @db.ObjectId
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Ensure unique combination of club and user
+  @@unique([clubId, userId])
+  @@map("saved_affiliates")
+}
+
+// Affiliate System
+model Affiliate {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String?         @db.ObjectId
+  clubId     String?         @db.ObjectId
+  email      String
+  purpose    String?
+  type       AffiliateType
+  refCode    String
+  status     AffiliateStatus @default(PENDING)
+  isApproved Boolean         @default(false)
+  byAdmin    Boolean         @default(false)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  // Relationships
+  user     User?     @relation(fields: [userId], references: [id])
+  club     Club?     @relation(fields: [clubId], references: [id])
+  otpCodes OtpCode[] @relation("AffiliateOtpCodes")
+
+  @@index([isApproved, type])
+  @@index([userId, isApproved, type])
+  @@map("affiliates")
+}
+
+// Chats and Messaging
+model Chat {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  companyId      String     @db.ObjectId
+  playerId       String     @db.ObjectId
+  initiatorId    String     @db.ObjectId // User ID who initiated the chat (can be company or player)
+  status         ChatStatus @default(PENDING)
+  acceptedAt     DateTime?
+  expiresAt      DateTime?
+  extensionCount Int        @default(0)
+  lastMessageAt  DateTime?
+  deletedBy      Json? // { "userId1": "2025-10-03T12:00:00.000Z", "userId2": "..." }
+  closedBy       String?    @db.ObjectId // User ID who declined/ended the chat
+  declinedAt     DateTime? // Timestamp when chat was declined (for 24hr cooldown)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  // JSON field for participant IDs (for easier querying)
+  participantIds Json // Array of user IDs [companyId, playerId]
+
+  // Relationships
+  company     User         @relation("ChatInitiator", fields: [companyId], references: [id], onDelete: Cascade)
+  player      User         @relation("ChatReceiver", fields: [playerId], references: [id], onDelete: Cascade)
+  messages    Message[]
+  hireRequest HireRequest?
+  events      ChatEvent[]
+
+  @@index([companyId])
+  @@index([playerId])
+  @@index([companyId, status])
+  @@index([playerId, status])
+  @@index([status, expiresAt])
+  @@index([lastMessageAt])
+  @@index([initiatorId])
+  @@map("chats")
+}
+
+model Message {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  chatId      String    @db.ObjectId
+  senderId    String    @db.ObjectId
+  content     String?
+  deliveredAt DateTime?
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // JSON fields
+  attachments Json? // Array of {name: string, url: string, category: string, mimeType: string, size: number}
+
+  // Relationships
+  chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender User @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([chatId])
+  @@index([chatId, createdAt])
+  @@index([chatId, senderId])
+  @@index([senderId])
+  @@index([createdAt])
+  @@index([deliveredAt])
+  @@index([readAt])
+  @@index([chatId, readAt])
+  @@map("messages")
+}
+
+// Invoice Model
+model Invoice {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  invoiceCode String        @unique
+  companyId   String        @db.ObjectId
+  clubId      String?       @db.ObjectId
+  amount      Float
+  currency    String        @default("USD")
+  status      InvoiceStatus @default(PENDING)
+  dueDate     DateTime?
+  paidAt      DateTime?
+  description String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // JSON fields
+  metadata Json? // Additional invoice data
+
+  // Relationships
+  company     Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  club        Club?         @relation(fields: [clubId], references: [id])
+  shortlisted Shortlisted[]
+  revenues    Revenue[]
+  Hire        Hire[]
+
+  // Performance indexes for admin queries
+  @@index([companyId, status])
+  @@index([clubId, status])
+  @@index([status, createdAt])
+  @@index([status])
+  @@index([createdAt])
+  @@map("invoices")
+}
+
+// Revenue Model
+model Revenue {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  invoiceId   String?     @db.ObjectId
+  type        RevenueType
+  amount      Float
+  currency    String      @default("USD")
+  description String?
+  recordedAt  DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // JSON fields
+  metadata Json? // Additional revenue tracking data
+
+  // Relationships
+  invoice Invoice? @relation(fields: [invoiceId], references: [id])
+
+  @@index([type, recordedAt])
+  @@index([recordedAt])
+  @@map("revenues")
+}
+
+// Hire Request Model (Optimized for Production)
+model HireRequest {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  requestCode String        @unique
+  chatId      String        @unique @db.ObjectId
+  companyId   String        @db.ObjectId
+  playerId    String        @db.ObjectId
+  status      RequestStatus @default(PENDING) // PENDING, HIRED, REJECTED
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  hiredAt     DateTime? // When player is actually hired
+
+  // Relationships
+  chat        Chat        @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  company     Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  player      Player      @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  hire        Hire? // Created when player is hired
+  events      ChatEvent[]
+  initiator   User        @relation("HireRequestInitiator", fields: [initiatorId], references: [id])
+  recipient   User        @relation("HireRequestRecipient", fields: [recipientId], references: [id])
+  initiatorId String      @db.ObjectId
+  recipientId String      @db.ObjectId
+
+  @@index([companyId, status])
+  @@index([playerId, status])
+  @@index([status, createdAt])
+  @@map("hire_requests")
+}
+
+// Actual Hire record
+model Hire {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  hireCode      String     @unique
+  hireRequestId String     @unique @db.ObjectId
+  companyId     String     @db.ObjectId
+  playerId      String     @db.ObjectId
+  jobId         String     @db.ObjectId
+  hiredAt       DateTime   @default(now())
+  startDate     DateTime?
+  status        HireStatus @default(ACTIVE)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  // Relationships
+  hireRequest HireRequest @relation(fields: [hireRequestId], references: [id], onDelete: Cascade)
+  company     Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  player      Player      @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  job         Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  invoice     Invoice?    @relation(fields: [invoiceId], references: [id])
+  invoiceId   String?     @db.ObjectId
+
+  @@map("hires")
+}
+
+// Chat Event Model (Timeline/History for Chats and Hire Requests)
+model ChatEvent {
+  id            String                  @id @default(auto()) @map("_id") @db.ObjectId
+  chatId        String?                 @db.ObjectId
+  requestId     String?                 @db.ObjectId
+  eventType     ChatEventType
+  description   String?
+  extensionDays RequestExtendEventDays? // Days added when extending chat
+  createdAt     DateTime                @default(now())
+
+  // JSON fields
+  metadata Json? // Additional event data (e.g., message content, user actions, etc.)
+
+  // Relationships
+  chat    Chat?        @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  request HireRequest? @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@index([chatId, createdAt])
+  @@index([requestId, createdAt])
+  @@index([eventType, createdAt])
+  @@map("chat_events")
+}

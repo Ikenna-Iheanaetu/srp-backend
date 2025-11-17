@@ -1,0 +1,18 @@
+/** @format */
+
+.page-title {
+	@apply text-4xl text-zinc-900 font-bold text-center;
+}
+
+.h2 {
+	@apply text-3xl font-semibold text-center;
+}
+
+.subHeading,
+.sub-heading {
+	@apply text-slate-500 text-base max-w-3xl font-normal;
+}
+
+.lead {
+	@apply font-normal text-slate-600 text-base text-center max-w-3xl;
+}

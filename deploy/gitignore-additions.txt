@@ -1,0 +1,9 @@
+# Add these lines to your .gitignore file
+
+# Deployment environment files (keep only the example)
+.env.deploy.*
+!.env.deploy.example
+
+# Ignore local deploy logs
+deploy/*.log
+deploy/tmp/

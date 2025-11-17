@@ -1,0 +1,21 @@
+# @format
+
+name: web auto deploy dev
+
+on:
+    push:
+        branches:
+            - dev
+        paths:
+            - "apps/web/**"
+            - ".github/workflows/web-auto-deploy-dev.yml"
+            - ".github/workflows/reusable-web-ecs-deploy.yml"
+
+jobs:
+    call-deploy:
+        uses: ./.github/workflows/reusable-web-ecs-deploy.yml
+        with:
+            branch_name: ${{ github.ref_name }}
+        secrets:
+            aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

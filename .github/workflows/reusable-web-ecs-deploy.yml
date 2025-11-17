@@ -1,0 +1,126 @@
+# @format
+
+name: Reusable Web ECS Deploy
+
+on:
+    workflow_call:
+        inputs:
+            branch_name:
+                description: "Branch used for checkout"
+                required: true
+                type: string
+        secrets:
+            aws_access_key_id:
+                description: "AWS Access Key ID"
+                required: true
+            aws_secret_access_key:
+                description: "AWS Secret Access Key"
+                required: true
+
+env:
+    AWS_REGION: eu-west-1
+    ECR_REPOSITORY: sports-recruiting-web-repo
+    ECS_CLUSTER: sports-recruiting-web-ecs-cluster
+    ECS_SERVICE: sports-recruiting-web-ecr-task-def-service
+    ECS_TASK_DEFINITION: sports-recruiting-web-ecr-task-def
+    CONTAINER_NAME: sports-recruiting-web-ecs-container
+
+jobs:
+    deploy:
+        name: Build and Deploy Web to ECS
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.branch_name }}
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                  aws-access-key-id: ${{ secrets.aws_access_key_id }}
+                  aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
+                  aws-region: ${{ env.AWS_REGION }}
+
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v2
+
+            - name: Set up build metadata
+              id: meta
+              run: |
+                  echo "git_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+                  echo "build_time=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+                  echo "image_tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  run_install: false
+
+            - name: Setup Node.js and pnpm
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20 # Use the same version as the Dockerfile
+                  cache: "pnpm"
+
+            - name: Build monorepo dependencies (packages/shared)
+              run: |
+                  pnpm install
+                  pnpm --filter '@repo/shared' build
+
+            - name: Build Docker image
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  IMAGE_TAG: ${{ steps.meta.outputs.image_tag }}
+              run: |
+                  docker build \
+                    --file apps/web/Dockerfile \
+                    --build-arg GIT_SHA=${{ steps.meta.outputs.git_sha }} \
+                    --build-arg BUILD_TIME=${{ steps.meta.outputs.build_time }} \
+                    --build-arg VITE_API_URL=${{ vars.VITE_API_URL }} \
+                    --build-arg VITE_GOOGLE_CLIENT_ID=${{ vars.VITE_GOOGLE_CLIENT_ID }} \
+                    --build-arg VITE_SITE_URL=${{ vars.VITE_SITE_URL }} \
+                    --tag $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG \
+                    --tag $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:latest \
+                    .
+
+            - name: Push Docker image to ECR
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  IMAGE_TAG: ${{ steps.meta.outputs.image_tag }}
+              run: |
+                  docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
+                  docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:latest
+
+            - name: Download current task definition
+              run: |
+                  aws ecs describe-task-definition \
+                    --task-definition ${{ env.ECS_TASK_DEFINITION }} \
+                    --query taskDefinition > task-definition.json
+
+            - name: Update task definition with new image
+              id: task-def
+              uses: aws-actions/amazon-ecs-render-task-definition@v1
+              with:
+                  task-definition: task-definition.json
+                  container-name: ${{ env.CONTAINER_NAME }}
+                  image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ steps.meta.outputs.image_tag }}
+
+            - name: Deploy to Amazon ECS
+              uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+              with:
+                  task-definition: ${{ steps.task-def.outputs.task-definition }}
+                  service: ${{ env.ECS_SERVICE }}
+                  cluster: ${{ env.ECS_CLUSTER }}
+                  # wait-for-service-stability: true removed because it causes extra github bills
+
+            - name: Deployment summary
+              if: success()
+              run: |
+                  echo "🚀 Deployment successful!"
+                  echo "Image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ steps.meta.outputs.image_tag }}"
+                  echo "Region: ${{ env.AWS_REGION }}"
+                  echo "Cluster: ${{ env.ECS_CLUSTER }}"
+                  echo "Service: ${{ env.ECS_SERVICE }}"

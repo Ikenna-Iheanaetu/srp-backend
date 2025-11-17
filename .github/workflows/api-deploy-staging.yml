@@ -1,0 +1,26 @@
+name: api deploy staging
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'apps/api/**'
+      - '.github/workflows/api-deploy-staging.yml'
+      - '.github/workflows/reusable-api-ecs-deploy.yml'
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - 'apps/api/**'
+      - '.github/workflows/api-deploy-staging.yml'
+      - '.github/workflows/reusable-api-ecs-deploy.yml'
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/reusable-api-ecs-deploy.yml
+    with:
+      branch_name: dev
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

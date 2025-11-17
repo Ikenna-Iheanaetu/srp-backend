@@ -1,0 +1,150 @@
+/** @format */
+
+import { CriticalActionConfirmationDialog } from "@/components/common/critical-action-confirmation-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { getFileNameUrl } from "@/lib/helper-functions/file-helpers";
+import { getJobActiveStatusStyles } from "@/lib/helper-functions/get-job-active-status-styles";
+import { cn } from "@/lib/utils";
+import { CrumbsLocationState } from "@/routes/main/components/app-header/bread-crumb-navigation";
+import { JobPosting } from "@/routes/main/routes/job-management/utils/types";
+import { ColumnDef, Row } from "@tanstack/react-table";
+import { EllipsisVertical, User } from "lucide-react";
+import React, { FC } from "react";
+import { href, useNavigate } from "react-router";
+import { useRemoveShortlistedJob } from "./use-remove-job";
+
+export interface ShortlistedJob extends JobPosting {
+	shortlistedCount: number;
+	shortlistedAvatars: string[];
+}
+
+interface RowActionsProps {
+	row: Row<ShortlistedJob>;
+}
+
+const RowActions: FC<RowActionsProps> = ({ row }) => {
+	const job = row.original;
+	const { mutate: deleteJob, isPending } = useRemoveShortlistedJob();
+	const [isConfirmingDelete, setIsConfirmingDelete] = React.useState(false);
+
+	const navigate = useNavigate();
+	const onViewCandidates = () => {
+		const path = href("/recruiting/shortlisted/:id", {
+			id: row.original.id,
+		});
+		void navigate(path, {
+			state: {
+				crumbs: [
+					{
+						path: href("/recruiting/shortlisted"),
+						label: "Shortlisted jobs",
+					},
+					{
+						path,
+						label: `Shortlisted Candidates for ${row.original.title}`,
+					},
+				],
+			} satisfies CrumbsLocationState,
+		});
+	};
+
+	return (
+		<>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button type="button" variant={"secondary"} size={"icon"}>
+						<EllipsisVertical />
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuItem onClick={onViewCandidates}>
+						Candidates
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onClick={() => setIsConfirmingDelete(true)}
+						disabled={isPending}>
+						Delete list
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+
+			<CriticalActionConfirmationDialog
+				open={isConfirmingDelete}
+				onOpenChange={setIsConfirmingDelete}
+				title="Delete Shortlist"
+				description={`Are you sure you want to delete the shortlisted job "${job.title}"? This action cannot be undone.`}
+				confirmText="delete"
+				confirmButtonText="Delete"
+				onConfirm={() => deleteJob(job)}
+			/>
+		</>
+	);
+};
+
+export const columns: ColumnDef<ShortlistedJob>[] = [
+	{
+		header: "Job Title",
+		accessorKey: "title",
+		cell: ({ row }) => {
+			const title = row.original.title;
+			return <div className="w-max max-w-28">{title}</div>;
+		},
+	},
+	{
+		header: "Count",
+		accessorKey: "shortlistedCount",
+		cell: ({ row }) => {
+			const count = row.original.shortlistedCount;
+			return <div>{count}</div>;
+		},
+	},
+	{
+		header: "Status",
+		accessorKey: "status",
+		cell: ({ row }) => {
+			const status = row.original.status;
+			return (
+				<div className={cn(getJobActiveStatusStyles(status))}>
+					{status}
+				</div>
+			);
+		},
+	},
+	{
+		header: "Candidates",
+		accessorKey: "shortlistedAvatars",
+		cell: ({ row }) => {
+			const avatars = row.original.shortlistedAvatars;
+
+			return (
+				<div className="flex items-center justify-center gap-0">
+					{avatars.map((url, index) => (
+						<Avatar key={index} className="-ml-4 shadow-md">
+							<AvatarImage
+								src={getFileNameUrl(url)}
+								alt="profile image"
+							/>
+							<AvatarFallback>
+								<User />
+							</AvatarFallback>
+						</Avatar>
+					))}
+				</div>
+			);
+		},
+	},
+	{
+		header: "Actions",
+		id: "actions",
+		cell: ({ row }) => {
+			return <RowActions row={row} />;
+		},
+	},
+];
